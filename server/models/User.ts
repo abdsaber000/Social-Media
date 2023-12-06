@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import {Relationships} from '../enums/relationships';
 
 const UserSchema = new mongoose.Schema({
     username :{
@@ -50,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     },
     relationship : {
         type : Number,
-        enum : [1,2,3]
+        enum : Relationships
     },
     description : {
         type : String,
