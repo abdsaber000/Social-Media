@@ -77,6 +77,35 @@ export const getUser = async(req : Request , res : Response) =>{
         const {password ,createdAt ,...other} = user.toObject();
         return res.status(200).json(other);
     }catch(error){
-        res.status(500).json(error);
+        return res.status(500).json(error);
+    }
+}
+
+export const follow = async(req : Request , res : Response) =>{
+    const currentUserId = req.body.userId;
+    const userToFollowId = req.params.id;
+    if(currentUserId === userToFollowId){
+        return res.status(403).json({error : "you can't follow yourself."});
+    }
+    try{
+        const currentUser = await User.findById(currentUserId);
+        const userToFollow = await User.findById(userToFollowId);
+        if(!currentUser){
+            return res.status(403).json({error : "Current user is not found."});
+        }
+        if(!userToFollow){
+            return res.status(403).json({error : "user you want to follow is not found."});
+        }
+
+        if(currentUser.followers.includes(userToFollow)){
+            return res.status(403).json({error : "you are following this user already."});
+        }
+
+        await currentUser.updateOne({$push : {followings : userToFollowId}});
+        await userToFollow.updateOne({$push : {followers : currentUserId}});
+
+        return res.status(200).send("done successfully.");
+    }catch(error){
+        return res.status(500).json(error);
     }
 }
