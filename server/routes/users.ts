@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {updateUser} from '../controllers/users';
+import {updateUser , deleteUser} from '../controllers/users';
 const router = Router();
 
 router.get('/' , (req , res)=>{
@@ -7,5 +7,6 @@ router.get('/' , (req , res)=>{
 })
 
 router.patch('/:id' , updateUser);
+router.delete('/:id' , deleteUser);
 
 export default router;

@@ -43,3 +43,25 @@ export const updateUser = async (req : Request , res : Response) => {
     }
     return res.status(200).send("Account is updated successfully.");
 }
+
+export const deleteUser = async(req : Request , res : Response) =>{
+    if(!req.body.userId){
+        return res.status(403).json({error : "user Id is not provided."});
+    }
+
+    const userId = req.body.userId;
+    
+    if(userId != req.params.id && !req.body.isAdmin){
+        console.log(userId);
+        console.log(req.params.id);
+        return res.status(403).json({error : "you can't delete another user."});
+    }
+
+
+    try{
+        const user = await User.findByIdAndDelete(userId);
+    }catch(error){
+        return res.status(500).json(error);
+    }
+    return res.status(200).send("Account is deleted successfully.");
+}
