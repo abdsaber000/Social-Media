@@ -97,12 +97,42 @@ export const follow = async(req : Request , res : Response) =>{
             return res.status(403).json({error : "user you want to follow is not found."});
         }
 
-        if(currentUser.followers.includes(userToFollow)){
+        if(currentUser.followings.includes(userToFollowId)){
             return res.status(403).json({error : "you are following this user already."});
         }
 
         await currentUser.updateOne({$push : {followings : userToFollowId}});
         await userToFollow.updateOne({$push : {followers : currentUserId}});
+
+        return res.status(200).send("done successfully.");
+    }catch(error){
+        return res.status(500).json(error);
+    }
+}
+
+
+export const unfollow = async(req : Request , res : Response) =>{
+    const currentUserId = req.body.userId;
+    const userToUnfollowId = req.params.id;
+    if(currentUserId === userToUnfollowId){
+        return res.status(403).json({error : "you can't unfollow yourself."});
+    }
+    try{
+        const currentUser = await User.findById(currentUserId);
+        const userToUnfollow = await User.findById(userToUnfollowId);
+        if(!currentUser){
+            return res.status(403).json({error : "Current user is not found."});
+        }
+        if(!userToUnfollow){
+            return res.status(403).json({error : "user you want to unfollow is not found."});
+        }
+
+        if(!currentUser.followings.includes(userToUnfollowId)){
+            return res.status(403).json({error : "you didn't follow this user."});
+        }
+
+        await currentUser.updateOne({$pull : {followings : userToUnfollowId}});
+        await userToUnfollow.updateOne({$pull : {followers : currentUserId}});
 
         return res.status(200).send("done successfully.");
     }catch(error){
