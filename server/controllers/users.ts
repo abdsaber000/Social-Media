@@ -2,6 +2,7 @@ import User from '../models/User';
 import bcrypt from "bcrypt";
 import {Request , Response} from 'express';
 
+
 const updatePassword = async (req : Request , res : Response) => {
     try{
         const newPassword = req.body.password;
@@ -64,4 +65,18 @@ export const deleteUser = async(req : Request , res : Response) =>{
         return res.status(500).json(error);
     }
     return res.status(200).send("Account is deleted successfully.");
+}
+
+export const getUser = async(req : Request , res : Response) =>{
+    try{
+        const userId = req.params.id;
+        const user = await User.findOne({_id : userId});
+        if(!user){
+            return res.status(403).send("User is not found.");
+        }
+        const {password ,createdAt ,...other} = user.toObject();
+        return res.status(200).json(other);
+    }catch(error){
+        res.status(500).json(error);
+    }
 }
