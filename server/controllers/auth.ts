@@ -16,6 +16,7 @@ export const register =  async (req : Request, res : Response)=>{
         return res.status(200).json(user);
     }catch(error){
         console.log(error);
+        res.status(500).json(error);
     }
     return res.status(403).send("error");
 }
@@ -36,6 +37,7 @@ export const login = async (req : Request , res : Response) => {
         }
     }catch(error){
         console.log(error);
+        res.status(500).json(error);
     }
     return res.status(200).send("logged successfully");
 }
