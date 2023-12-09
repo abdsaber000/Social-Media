@@ -1,3 +1,69 @@
 .rightbar{
     flex : 3;
 }
+
+
+
+.rightbar-online-friend-img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right : 20px;
+}
+
+.rightbar-online-status{
+    width: 12px;
+    height: 12px;
+    background-color: limegreen;
+    border-radius: 50%;
+    position:absolute;
+    margin-left : 25px;
+    margin-bottom: 10px;
+}
+
+.rightbar-online-friends-list{
+    margin:0px;
+    padding:0px;
+    list-style: none;
+}
+
+.rightbar-profile-img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right : 10px;
+}
+
+.rightbar-profile-title{
+    margin-bottom : 20px;
+    margin-top : 20px;
+}
+
+.rightbar-hr{
+    margin-top : 20px;
+    margin-bottom : 20px;
+}
+
+.rightbar-online-friend{
+    margin-top : 20px;
+    display: flex;
+    align-items: center;
+    cursor:pointer;
+}
+
+
+.rightbar-online-friend:hover{
+    background-color: rgb(221, 221, 221);
+}
+
+.right-profile-user{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.right-profile-user:hover{
+    background-color: rgb(221, 221, 221);
+}
