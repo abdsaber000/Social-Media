@@ -1,5 +1,23 @@
-import mongoose from "mongoose";
+import mongoose , {Document} from "mongoose";
 import {Relationships} from '../enums/relationships';
+
+interface IUser{
+    username : string,
+    email : string,
+    password : string,
+    description : string,
+    followings : Array<mongoose.Types.ObjectId>,
+    followers : Array<mongoose.Types.ObjectId>,
+    profilePic : string,
+    profileCov : string,
+    isAdmin : boolean,
+    city : string,
+    from : string,
+    relationship : Relationships,
+    createdAt : any
+}
+
+export interface IUserModel extends IUser , Document{};
 
 const UserSchema = new mongoose.Schema({
     username :{
@@ -30,11 +48,11 @@ const UserSchema = new mongoose.Schema({
         default : ""
     },
     followers : {
-        type : Array,
+        type : Array<mongoose.Types.ObjectId>,
         default : []
     },
     followings : {
-        type : Array,
+        type : Array<mongoose.Types.ObjectId>,
         default : []
     },
     isAdmin : {
@@ -64,4 +82,4 @@ const UserSchema = new mongoose.Schema({
     }
 );
 
-export default mongoose.model('User' , UserSchema);
+export default mongoose.model<IUserModel>('User' , UserSchema);

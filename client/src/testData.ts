@@ -22,5 +22,14 @@ export const Users = [
       userId: 1,
       like: 32,
       comment: 9,
-    }
+    },
+    {
+        id: 2,
+        desc: "New Post",
+        photo: "assets/65192417_2155885274540052_2351479742563090432_n.jpg",
+        date: "10 mins ago",
+        userId: 2,
+        like: 50,
+        comment: 9,
+      }
   ];
