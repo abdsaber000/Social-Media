@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Post.css";
 import { ThumbUp, MoreVert } from "@material-ui/icons";
 import { Users } from "../../testData";
@@ -18,6 +18,16 @@ interface Props {
 
 export default function Post({ Post }: Props) {
     const user = (Users.filter(user => user.id === Post.userId))[0]
+    const [like , setLike] = useState(Post.like);
+    const [isLiked , setIsLiked] = useState(false);
+
+    const likeHandler = ()=>{
+        setLike(isLiked ? like - 1 : like + 1);
+        setIsLiked(!isLiked)
+    }
+    const likeColorHandler = ()=>{
+        return isLiked ? '#1877f2' : '#000000'
+    }
     return (
         <div className="post">
             <div className="post-top">
@@ -49,8 +59,8 @@ export default function Post({ Post }: Props) {
 
             <div className="post-bottom">
                 <div className="post-bottom-left">
-                    <ThumbUp className="post-like-icon" />
-                    <span className="post-likes-counter">{Post.like} likes</span>
+                    <ThumbUp className="post-like-icon" onClick={likeHandler} htmlColor= {likeColorHandler()} />
+                    <span className="post-likes-counter" >{like} likes</span>
                 </div>
 
                 <div className="post-bottom-right">
